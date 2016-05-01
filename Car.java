@@ -27,7 +27,7 @@ public class Car
         Gpio.pwmSetRange(1024);
         Gpio.pinMode (1, Gpio.PWM_OUTPUT);
         Gpio.pinMode (23, Gpio.PWM_OUTPUT);
-        drive = new Motor (1, 23);
+        drive = new Motor (23, 1);
     }
     
     public void setSpeed(int speed){
