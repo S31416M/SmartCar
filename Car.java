@@ -47,12 +47,16 @@ public class Car
         __drive.stopRotation();
     }
 
-    public void turnRight (int time) {
-        __steer.turnRight(time);
+    public void turnRight () {
+        __steer.turnRight();
     }
-    public void turnLeft (int time) {
-        __steer.turnLeft(time);
-        __steer.turnRight(10);
+    public void turnLeft () {
+        __steer.turnLeft();
+  //      __steer.turnRight(10);
     
+    }
+    public void setStraight()
+    {
+        __steer.setStraight();
     }
 }

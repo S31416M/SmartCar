@@ -43,22 +43,44 @@ public class Motor
         Gpio.pwmWrite (__pin2, 0);
     }
 
-    public void turnRight (int time)
+    public void turnRight ()
     {
        Gpio.digitalWrite (__pin1, 1);
        Gpio.digitalWrite (__pin2, 0);
-        Gpio.delay (time);
-       Gpio.digitalWrite (__pin1, 0);
+    }
+    
+    public void turnLeft ()
+    {
+       Gpio.digitalWrite (__pin2, 1);
+        Gpio.digitalWrite (__pin1, 0);
+        //SoftPwm.softPwmWrite(__pin2, 50);
+        //SoftPwm.softPwmWrite(__pin1,0);
+       //SoftPwm.softPwmWrite(__pin2, 0);
+    }
+     public void turnRight (int time)
+    {
+       Gpio.digitalWrite (__pin1, 1);
+       Gpio.digitalWrite (__pin2, 0);
+       Gpio.delay(time);
+       Gpio.digitalWrite(__pin1, 0);
     }
     
     public void turnLeft (int time)
     {
        Gpio.digitalWrite (__pin2, 1);
         Gpio.digitalWrite (__pin1, 0);
+        Gpio.delay(time);
+       Gpio.digitalWrite(__pin2, 0);
         //SoftPwm.softPwmWrite(__pin2, 50);
         //SoftPwm.softPwmWrite(__pin1,0);
-        Gpio.delay (time);
-       Gpio.digitalWrite (__pin2, 0);
        //SoftPwm.softPwmWrite(__pin2, 0);
+    }
+    public void setStraight()
+    {
+       Gpio.digitalWrite (__pin1, 1);
+       Gpio.digitalWrite(__pin2,0);
+       Gpio.delay(10);
+        Gpio.digitalWrite (__pin2, 0);
+        Gpio.digitalWrite (__pin1, 0);
     }
 }
