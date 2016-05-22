@@ -1,11 +1,15 @@
 #BlueJ class context
-comment0.params=pin1\ pin2
+comment0.params=rp_pin1\ rp_pin2
 comment0.target=Motor(int,\ int)
 comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Motor\n
-comment1.params=speed
-comment1.target=void\ setSpeed(int)
-comment2.params=time
-comment2.target=void\ moveForward(int)
-comment3.params=time
-comment3.target=void\ moveBackward(int)
-numComments=4
+comment1.params=voltage\ time
+comment1.target=void\ rotateForward(int,\ int)
+comment2.params=voltage\ time
+comment2.target=void\ rotateBackward(int,\ int)
+comment3.params=
+comment3.target=void\ stopRotation()
+comment4.params=time
+comment4.target=void\ turnRight(int)
+comment5.params=time
+comment5.target=void\ turnLeft(int)
+numComments=6

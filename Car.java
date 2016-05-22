@@ -11,9 +11,8 @@ import com.pi4j.wiringpi.*;
 public class Car
 {
     // instance variables - replace the example below with your own
-    Motor drive;
-    int __speed;
-   // Motor steer;
+    Motor __drive;
+    Motor __steer;
    // EchoSensor frontSensor;
 
     /**
@@ -27,21 +26,33 @@ public class Car
         Gpio.pwmSetRange(1024);
         Gpio.pinMode (1, Gpio.PWM_OUTPUT);
         Gpio.pinMode (23, Gpio.PWM_OUTPUT);
-        drive = new Motor (23, 1);
+        Gpio.pinMode (4, Gpio.OUTPUT);
+        Gpio.pinMode (5, Gpio.OUTPUT);
+        //SoftPwm.softPwmCreate(4, 0, 100);
+        //SoftPwm.softPwmCreate(5,0, 100);
+       
+        __drive = new Motor (23, 1);
+        __steer = new Motor (4, 5);
     }
     
-    public void setSpeed(int speed){
-        __speed = speed;
+    public void moveForward (int speed, int time) {
+        __drive.rotateForward (speed, time);
     }
     
-    public void moveForward(int delay){
-        drive.setSpeed(__speed);
-        drive.moveForward(delay);
+    public void moveBackward (int speed, int time) {
+        __drive.rotateBackward (speed, time);
     }
     
-    public void moveBackward(int delay){
-        drive.setSpeed(__speed);
-        drive.moveBackward(delay);
+    public void brake () {
+        __drive.stopRotation();
     }
 
+    public void turnRight (int time) {
+        __steer.turnRight(time);
+    }
+    public void turnLeft (int time) {
+        __steer.turnLeft(time);
+        __steer.turnRight(10);
+    
+    }
 }

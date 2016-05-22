@@ -22,14 +22,19 @@ public class CarController
         }
       Car myCar = new Car();
       System.out.println("Speed is " + speed);
-      myCar.setSpeed(speed);
-      if(dir >0){
-        myCar.moveForward(5000);
+     if(dir >0){
+        //myCar.moveForward(speed,5000);
+        myCar.turnRight(2000);
     }
        else{
-           myCar.moveBackward(5000);
+           //myCar.moveBackward(speed,5000);
+           myCar.turnLeft(2000);
+           myCar.turnRight(10);
         }
-      System.out.println("Done");
+        /*myCar.turnRight(5000);
+        myCar.turnLeft(5000);
+        */
+    System.out.println("Complete");
     }
     
 }

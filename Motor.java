@@ -9,36 +9,56 @@ import com.pi4j.wiringpi.*;
 public class Motor
 {
     int __pin1, __pin2;
-    int __speed;
-
+    double __ton, __toff;
     /**
      * Constructor for objects of class Motor
      */
-    public Motor(int pin1, int pin2)
+    public Motor(int rp_pin1, int rp_pin2)
     {
-        __pin1 = pin1;
-        __pin2 = pin2;
-       __speed = 0; 
+        __pin1 = rp_pin1;
+        __pin2 = rp_pin2;
+        __ton = 250;
+        __toff = 250;
     }
     
-    public void setSpeed (int speed) 
+    public void rotateForward (int voltage, int time)
     {
-        __speed = speed;
-    }
-    
-    public void moveForward (int time)
-    {
+        Gpio.pwmWrite (__pin1, voltage);
         Gpio.pwmWrite (__pin2, 0);
-        Gpio.pwmWrite (__pin1, __speed);
         Gpio.delay (time);
         Gpio.pwmWrite(__pin1, 0);
     }
 
-    public void moveBackward (int time)
+    public void rotateBackward (int voltage, int time)
     {
+        Gpio.pwmWrite (__pin2, voltage);
         Gpio.pwmWrite (__pin1, 0);
-        Gpio.pwmWrite (__pin2, __speed);
         Gpio.delay (time);
         Gpio.pwmWrite (__pin2, 0);
+    }
+    
+    public void stopRotation ()
+    {
+        Gpio.pwmWrite (__pin1, 0);
+        Gpio.pwmWrite (__pin2, 0);
+    }
+
+    public void turnRight (int time)
+    {
+       Gpio.digitalWrite (__pin1, 1);
+       Gpio.digitalWrite (__pin2, 0);
+        Gpio.delay (time);
+       Gpio.digitalWrite (__pin1, 0);
+    }
+    
+    public void turnLeft (int time)
+    {
+       Gpio.digitalWrite (__pin2, 1);
+        Gpio.digitalWrite (__pin1, 0);
+        //SoftPwm.softPwmWrite(__pin2, 50);
+        //SoftPwm.softPwmWrite(__pin1,0);
+        Gpio.delay (time);
+       Gpio.digitalWrite (__pin2, 0);
+       //SoftPwm.softPwmWrite(__pin2, 0);
     }
 }
