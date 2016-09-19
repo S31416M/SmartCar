@@ -13,6 +13,7 @@ public class Car
     // instance variables - replace the example below with your own
     Motor __drive;
     Motor __steer;
+    DistanceSensor __ds;
    // EchoSensor frontSensor;
 
     /**
@@ -33,20 +34,31 @@ public class Car
        
         __drive = new Motor (23, 1);
         __steer = new Motor (4, 5);
+        __ds = new DistanceSensor (15, 16);
     }
     
-    public void moveForward (int speed, int time) {
-        __drive.rotateForward (speed, time);
+    public void moveForward (int speed) {
+        __drive.rotateForward (speed);
     }
     
-    public void moveBackward (int speed, int time) {
-        __drive.rotateBackward (speed, time);
+    public void moveBackward (int speed) {
+        __drive.rotateBackward (speed);
     }
     
     public void brake () {
         __drive.stopRotation();
+        __drive.rotateBackward(1000);
+        Gpio.delay(500);
+        __drive.stopRotation();
     }
 
+    public void brakeBackward () {
+     //   __drive.stopRotation();
+      //  __drive.rotateForward(1000);
+      //  Gpio.delay(500);
+        __drive.stopRotation();
+    }
+    
     public void turnRight () {
         __steer.turnRight();
     }
@@ -58,5 +70,31 @@ public class Car
     public void setStraight()
     {
         __steer.setStraight();
+    }
+    
+    public void turnRight (int time)
+    {
+        __steer.turnRight (time);
+    }   
+
+    public void turnLeft (int time)
+    {
+        __steer.turnLeft (time);
+    }    
+
+    public long getDistance ()
+    {
+        return __ds.getAverageDistance (1);
+    }
+
+    public int sum (int n) 
+    {
+        int x = 1;
+        int sum = 0;
+        for (int count = 0; count < n; count++) {
+            sum = x + sum;
+            x++;
+        }
+        return (sum);
     }
 }

@@ -21,20 +21,16 @@ public class Motor
         __toff = 250;
     }
     
-    public void rotateForward (int voltage, int time)
+    public void rotateForward (int voltage)
     {
         Gpio.pwmWrite (__pin1, voltage);
         Gpio.pwmWrite (__pin2, 0);
-        Gpio.delay (time);
-        Gpio.pwmWrite(__pin1, 0);
     }
 
-    public void rotateBackward (int voltage, int time)
+    public void rotateBackward (int voltage)
     {
         Gpio.pwmWrite (__pin2, voltage);
         Gpio.pwmWrite (__pin1, 0);
-        Gpio.delay (time);
-        Gpio.pwmWrite (__pin2, 0);
     }
     
     public void stopRotation ()
