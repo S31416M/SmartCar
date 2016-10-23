@@ -13,6 +13,7 @@ public class Car
     // instance variables - replace the example below with your own
     Motor __drive;
     Motor __steer;
+    DistanceSensor __ds;
    // EchoSensor frontSensor;
 
     /**
@@ -32,18 +33,22 @@ public class Car
         //SoftPwm.softPwmCreate(5,0, 100);
        
         __drive = new Motor (23, 1);
-        __steer = new Motor (4, 5);
+        __steer = new Motor (5, 4);
+        __ds = new DistanceSensor (15,16);
     }
     
-    public void moveForward (int speed, int time) {
-        __drive.rotateForward (speed, time);
+    public void moveForward (int speed) {
+        __drive.rotateForward (speed);
     }
     
-    public void moveBackward (int speed, int time) {
-        __drive.rotateBackward (speed, time);
+    public void moveBackward (int speed) {
+        __drive.rotateBackward (speed);
     }
     
     public void brake () {
+        __drive.stopRotation();
+        __drive.rotateBackward(1000);
+        Gpio.delay(600);
         __drive.stopRotation();
     }
 
@@ -58,5 +63,20 @@ public class Car
     public void setStraight()
     {
         __steer.setStraight();
+    } 
+    public void turnRight(int time){
+        __steer.turnRight(time);
+    }
+    public void turnLeft(int time){
+        __steer.turnLeft(time);
+    }
+    public long getDistance(){
+    return  __ds.GetAverageDistance(1);
+}
+public void brakeBackward () {
+        //__drive.stopRotation();
+        //__drive.rotateForward(1000);
+        //Gpio.delay(600);
+        __drive.stopRotation();
     }
 }
