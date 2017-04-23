@@ -16,9 +16,7 @@ public class DistanceSensor
        Gpio.pinMode(__trig, Gpio.OUTPUT);
        Gpio.pinMode(__echo, Gpio.INPUT);
         Gpio.digitalWrite(__trig, 0);
-        Gpio.delay(250);
-        Gpio.digitalWrite(__trig, 1);
-        Gpio.delay(500);
+        
     }
 
     /**
@@ -33,19 +31,23 @@ public class DistanceSensor
     //   Gpio.delay(100);
        // wait for echo to go down
    //   System.out.println("***********************************************************************");
-        __counter = 0;
-        while(Gpio.digitalRead(__echo)==1){
-   //       System.out.println("waiting for echo to go down");
-        }
+    __counter = 0;
+        Gpio.digitalWrite(__trig, 1);
+        Gpio.delayMicroseconds(10);
+        Gpio.digitalWrite(__trig, 0);
+     //   while(Gpio.digitalRead(__echo)==1){
+    //      System.out.println("waiting for echo to go down");
+     //   __counter++;
+      //  }
     //   System.out.println("***********************************************************************");
-       while(Gpio.digitalRead(__echo)==0){
+     while(Gpio.digitalRead(__echo)==0){
     //     System.out.println("waiting for echo to go up");
-        }
+      }
   //    System.out.println("***********************************************************************");
-       while(Gpio.digitalRead(__echo)==1){
-           __counter++;
+      while(Gpio.digitalRead(__echo)==1){
+         __counter++;
    //        System.out.println("sensing distance, counting up");
-        }
+       }
         return __counter;
     }
     
@@ -71,7 +73,7 @@ public class DistanceSensor
         } */
         for (int count = 0; count < numReadings; count++) {
             distance = distance + getDistance();
-            Gpio.delay(50);
+            Gpio.delay(1);
         }
         return (distance/numReadings);
     }

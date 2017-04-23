@@ -8,6 +8,7 @@
 import com.pi4j.wiringpi.*;
 public class Motor
 {
+    // __pin1 is pwm
     int __pin1, __pin2;
     double __ton, __toff;
     /**
@@ -19,26 +20,28 @@ public class Motor
         __pin2 = rp_pin2;
         __ton = 250;
         __toff = 250;
+    //    SoftPwm.softPwmCreate(__pin1, 0, 100);
+     //   SoftPwm.softPwmCreate(__pin2, 0,100);
     }
     
     public void rotateForward (int voltage)
     {
         Gpio.pwmWrite (__pin1, voltage);
-        Gpio.pwmWrite (__pin2, 0);
+        Gpio.digitalWrite (__pin2, 0);
     }
 
-    public void rotateBackward (int voltage)
+    public void rotateBackward ()
     {
-        Gpio.pwmWrite (__pin2, voltage);
+        Gpio.digitalWrite (__pin2, 1);
         Gpio.pwmWrite (__pin1, 0);
     }
     
     public void stopRotation ()
     {
         Gpio.pwmWrite (__pin1, 0);
-        Gpio.pwmWrite (__pin2, 0);
+        Gpio.digitalWrite (__pin2, 0);
     }
-
+/*
     public void turnRight ()
     {
        Gpio.digitalWrite (__pin1, 1);
@@ -47,10 +50,10 @@ public class Motor
     
     public void turnLeft ()
     {
-       Gpio.digitalWrite (__pin2, 1);
-        Gpio.digitalWrite (__pin1, 0);
-        //SoftPwm.softPwmWrite(__pin2, 50);
-        //SoftPwm.softPwmWrite(__pin1,0);
+      Gpio.digitalWrite (__pin2, 1);
+      Gpio.digitalWrite (__pin1, 0);
+     //   SoftPwm.softPwmWrite(__pin2, 50);
+      //  SoftPwm.softPwmWrite(__pin1,0);
        //SoftPwm.softPwmWrite(__pin2, 0);
     }
      public void turnRight (int time)
@@ -73,10 +76,13 @@ public class Motor
     }
     public void setStraight()
     {
-       Gpio.digitalWrite (__pin1, 1);
-       Gpio.digitalWrite(__pin2,0);
-       Gpio.delay(10);
-        Gpio.digitalWrite (__pin2, 0);
-        Gpio.digitalWrite (__pin1, 0);
+        Gpio.digitalWrite (__pin1, 1);
+        Gpio.digitalWrite(__pin2,1);
+        Gpio.delay(1);
+       // Gpio.digitalWrite (__pin2, 0);
+      // Gpio.digitalWrite (__pin1, 0);
+      // SoftPwm.softPwmWrite(__pin1, 0);
+       //SoftPwm.softPwmWrite(__pin2, 0);
     }
+*/
 }

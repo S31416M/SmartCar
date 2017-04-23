@@ -14,6 +14,7 @@ public class CarController
       int time = 1;
       int turn = 1;
       int turnTime = 1;
+    
       
       if(args.length > 0){
           try {
@@ -29,74 +30,42 @@ public class CarController
                 System.exit(1);
             }
         }
-      Car myCar = new Car();
       System.out.println("Speed is " + speed);
-     /*if(dir >0){ // moving forward
-        myCar.moveForward(speed,time);
-        if(turn > 0){
-            myCar.turnRight();
-            myCar.moveForward(speed,time);
-            myCar.setStraight();
-            myCar.brake();
+      Car myCar = new Car();
+   /*   while(true){
+          long frontDistance = myCar.getFrontDistance();
+          System.out.println("Front distance is " + frontDistance);
+          Gpio.delay(1000);
+        }*/ 
+        long frontDistance = myCar.getFrontDistance();
+       
+         System.out.println("Front distance is " + frontDistance);
+     if(frontDistance > 12000){
+          myCar.moveForward(speed);
         }
-        else{
-           myCar.turnLeft();
-            myCar.moveForward(speed,time);
-            myCar.setStraight();
-            myCar.brake();
-        }   
-    }
-    else{ //moving backward 
-         myCar.moveBackward(speed,time);
-         if (turn >0){
-             myCar.turnRight();
-            myCar.moveBackward(speed,time);
-            myCar.setStraight();
-            myCar.brake();
-        }
-        else{
-            myCar.turnLeft();
-            myCar.moveBackward(speed,time);
-            myCar.setStraight();
-            myCar.brake();
-        }
-        /*myCar.turnRight(5000);
-        myCar.turnLeft(5000);
-    }*/
-
-    /*myCar.moveForward (speed, time);
-    myCar.turnRight (turnTime);
-    myCar.setStraight();
-    myCar.brake();*/
-    
-   
-    
-   long distance = myCar.getDistance(); 
-   System.out.println("The distance is" + distance); 
-   if(distance > 15000){
-       myCar.moveForward(speed);
-    }
-   while (distance > 15000) {
-      // myCar.moveForward(speed);
-       Gpio.delay(time);
-        distance = myCar.getDistance();
-        System.out.println("The distance is" + distance); 
-    }
-    System.out.println("The distance is" + distance); 
+      while(frontDistance > 12000){
+       //   delay(1);
+         frontDistance = myCar.getFrontDistance(); 
+          Gpio.delay(1);
+         // System.out.println("Front distance is " + frontDistance);
+    }  
+     System.out.println("Front distance is " + frontDistance);
     myCar.brake();
-    myCar.moveBackward(speed);
-    Gpio.delay(500);
-    myCar.brakeBackward();
-    myCar.turnRight();
+     long rightDistance = myCar.getRightDistance();
+        long leftDistance = myCar.getLeftDistance();
+    if(rightDistance > leftDistance){
+        myCar.turnRight();
+        Gpio.delay(time);
+    }
+    else{
+        myCar.turnLeft();
+        Gpio.delay(time);
+    }
+    myCar.setStraight();
     myCar.moveForward(speed);
-    Gpio.delay(5000);
-    myCar.setStraight();
+    Gpio.delay(time);
     myCar.brake();
-    
-    
-   } 
-  /* int sum = myCar.sum (11);
-   System.out.println (sum); */
+}
 }
 
     

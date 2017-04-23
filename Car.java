@@ -11,9 +11,12 @@ import com.pi4j.wiringpi.*;
 public class Car
 {
     // instance variables - replace the example below with your own
-    Motor __drive;
-    Motor __steer;
-    DistanceSensor __ds;
+    int __enPin;
+    Motor __right;
+    Motor __left;
+    DistanceSensor __fds;
+    DistanceSensor __rds;
+    DistanceSensor __lds;
    // EchoSensor frontSensor;
 
     /**
@@ -25,54 +28,71 @@ public class Car
         Gpio.pwmSetMode(Gpio.PWM_MODE_MS);
         Gpio.pwmSetClock(384);
         Gpio.pwmSetRange(1024);
-        Gpio.pinMode (1, Gpio.PWM_OUTPUT);
-        Gpio.pinMode (23, Gpio.PWM_OUTPUT);
-        Gpio.pinMode (4, Gpio.OUTPUT);
-        Gpio.pinMode (5, Gpio.OUTPUT);
+       // Gpio.pinMode (6, Gpio.OUTPUT); // was the enable output, now hardwired to 5v
+        Gpio.pinMode (1, Gpio.PWM_OUTPUT); //right wheel
+        Gpio.pinMode (23, Gpio.PWM_OUTPUT); //left wheel
+        Gpio.pinMode (4, Gpio.OUTPUT); // right wheel
+        Gpio.pinMode (5, Gpio.OUTPUT); //left wheel
         //SoftPwm.softPwmCreate(4, 0, 100);
         //SoftPwm.softPwmCreate(5,0, 100);
-       
-        __drive = new Motor (23, 1);
-        __steer = new Motor (4, 5);
-        __ds = new DistanceSensor (15, 16);
+       __enPin =6;
+        __right = new Motor (1, 4);
+        __left = new Motor (23, 5);
+        __fds = new DistanceSensor (30, 14);
+       __lds = new DistanceSensor(2, 3);
+        __rds = new DistanceSensor(24, 25);
+    }
+    
+    public void startCar(){
+        Gpio.digitalWrite(__enPin,1);
+    }
+    
+    public void stopCar(){
+        Gpio.digitalWrite(__enPin, 0);
     }
     
     public void moveForward (int speed) {
-        __drive.rotateForward (speed);
+        __right.rotateForward (speed);
+        __left.rotateForward (speed);
     }
     
-    public void moveBackward (int speed) {
-        __drive.rotateBackward (speed);
+    public void moveBackward () {
+        __right.rotateBackward ();
+        __left.rotateBackward ();
     }
     
     public void brake () {
-        __drive.stopRotation();
-        __drive.rotateBackward(1000);
-        Gpio.delay(500);
-        __drive.stopRotation();
+        __right.stopRotation();
+        __left.stopRotation();
+      // __drive.rotateBackward(1000);
+      //  Gpio.delay(500);
+      // __drive.stopRotation();
     }
 
     public void brakeBackward () {
      //   __drive.stopRotation();
       //  __drive.rotateForward(1000);
       //  Gpio.delay(500);
-        __drive.stopRotation();
+        __right.stopRotation();
+        __left.stopRotation();
     }
     
     public void turnRight () {
-        __steer.turnRight();
+        __right.stopRotation();
+        __left.rotateForward(1020);
     }
     public void turnLeft () {
-        __steer.turnLeft();
-  //      __steer.turnRight(10);
+        __left.stopRotation();
+        __right.rotateForward(1020);
     
     }
-    public void setStraight()
+  public void setStraight()
     {
-        __steer.setStraight();
+        __right.stopRotation();
+        __left.stopRotation();
     }
     
-    public void turnRight (int time)
+/*    public void turnRight (int time)
     {
         __steer.turnRight (time);
     }   
@@ -81,10 +101,20 @@ public class Car
     {
         __steer.turnLeft (time);
     }    
-
-    public long getDistance ()
+*/
+    public long getFrontDistance ()
     {
-        return __ds.getAverageDistance (1);
+        return __fds.getAverageDistance (3);
+    }
+    
+    public long getLeftDistance ()
+    {
+        return __lds.getAverageDistance (3);
+    }
+    
+    public long getRightDistance ()
+    {
+        return __rds.getAverageDistance (3);
     }
 
     public int sum (int n) 
