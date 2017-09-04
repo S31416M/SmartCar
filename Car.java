@@ -77,7 +77,7 @@ public class Car
         __left.stopRotation();
     }
     
-    public void turnRight () {
+    /*public void turnRight () {
         __right.stopRotation();
         __left.rotateForward(1020);
     }
@@ -85,11 +85,37 @@ public class Car
         __left.stopRotation();
         __right.rotateForward(1020);
     
-    }
-  public void setStraight()
+    }*/
+  
+    public void setStraight()
     {
         __right.stopRotation();
         __left.stopRotation();
+    }
+    
+    public void turnRight(int time) {
+        __right.stopRotation();
+        __left.rotateForward(1023);
+        Gpio.delay(time); 
+        __left.stopRotation();
+    }
+    
+    public void turnLeft(int time) {
+        __left.stopRotation();
+        __right.rotateForward(1023);
+        Gpio.delay(time);
+        __right.stopRotation();
+    }
+    
+    public void moveForwardUntilObject (int speed, long stoppingDistance) {
+        long frontDistance = getFrontDistance();
+        while(frontDistance > stoppingDistance){
+            moveForward(speed);
+            Gpio.delay(1);
+            frontDistance = getFrontDistance();
+        }
+        brake();
+        System.out.println("Front distance is " + frontDistance);
     }
     
 /*    public void turnRight (int time)

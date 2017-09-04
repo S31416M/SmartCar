@@ -30,43 +30,53 @@ public class CarController
                 System.exit(1);
             }
         }
+     
       System.out.println("Speed is " + speed);
       Car myCar = new Car();
+       if(speed <=0 ){
+          System.out.println("Stopping car and exiting");
+          myCar.moveForward(0);
+          System.exit(0);
+        }
    /*   while(true){
           long frontDistance = myCar.getFrontDistance();
           System.out.println("Front distance is " + frontDistance);
           Gpio.delay(1000);
         }*/ 
-        long frontDistance = myCar.getFrontDistance();
-       
-         System.out.println("Front distance is " + frontDistance);
-     if(frontDistance > 12000){
-          myCar.moveForward(speed);
+   
+             while (true) {
+            myCar.moveForwardUntilObject (speed, 12000);
+            long rightDistance = myCar.getRightDistance();
+            System.out.println ("Right distance is " + rightDistance);
+            long leftDistance = myCar.getLeftDistance();
+            System.out.println ("Left distance is " + leftDistance);
+            if(rightDistance > leftDistance){
+                myCar.turnRight(time);
+            }
+            else{
+                myCar.turnLeft(time);
+            }
+            myCar.setStraight();
         }
-      while(frontDistance > 12000){
-       //   delay(1);
-         frontDistance = myCar.getFrontDistance(); 
-          Gpio.delay(1);
-         // System.out.println("Front distance is " + frontDistance);
-    }  
-     System.out.println("Front distance is " + frontDistance);
+      
+        
+/*    myCar.moveForward(speed);
+    Gpio.delay(time);
     myCar.brake();
-     long rightDistance = myCar.getRightDistance();
-        long leftDistance = myCar.getLeftDistance();
-    if(rightDistance > leftDistance){
-        myCar.turnRight();
-        Gpio.delay(time);
-    }
-    else{
-        myCar.turnLeft();
-        Gpio.delay(time);
-    }
-    myCar.setStraight();
+  
+   while (frontDistance < 12000) {
+    myCar.turnRight(time);
+    frontDistance = myCar.getFrontDistance();
+}
     myCar.moveForward(speed);
     Gpio.delay(time);
     myCar.brake();
 }
+*/
 }
+}
+
+
 
     
    
